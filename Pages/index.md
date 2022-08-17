@@ -1,25 +1,32 @@
-# [staticoso:Site:Name]
+// % Title = staticoso docs
 
-Don't yet mind the fact that there is no CSS at all, and only one single page. Still a heavy WIP :)
+# <a href="https://gitlab.com/octtspacc/staticoso">staticoso</a> docs
+
+_View the source for this site: [gitlab.com/octtspacc/staticoso-docs](https://gitlab.com/octtspacc/staticoso-docs)_
+
+Don't yet mind the fact that there is no CSS at all, and only one single page. **Still a heavy WIP** :)
 
 
 ## Input Files
 
+_Note: Non-lowercase file suffixes are currently broken. This will be fixed._
+
+_Note: Files with `.htm` extension are currently broken too._
+
 ### Templates and Parts
 
-For templates and parts files, currently only HTML is supported.
+For templates and parts files, formats supported as input are:
+
+- HTML (Suffixes: `.htm`, `.html`)
 
 ### Pages and Posts
 
 For pages and posts files, many formats are supported as input:
 
-- Markdown (Suffixes: `.md`)
-- Pug (through pug-cli) (Suffixes: `.pug`)
-
-Some are planned for support, but some bugs have to be fixed fist:
-
 - HTML (Suffixes: `.htm`, `.html`)
-- Plain text (Suffixes: `.txt`)
+- Markdown (Suffixes: `.md`, `.markdown`)
+- Pug (through [pug-cli](https://npmjs.com/package/pug-cli)) (Suffixes: `.pug`)
+- Plain text (Suffixes: `.txt`) (Rendered as plain text enclosed in `<pre>` tags in the HTML)
 
 
 ## Site folder Structure
@@ -32,7 +39,7 @@ A typical staticoso site folder looks like this:
 - `Templates/`: Contains base HTML pages to be used as templates for compiling all the pages.
 - `StaticParts/`: Contains HTML snippets that can be included statically in HTML templates.
 - `DynamicParts/`: Contains HTML snippets that can be included dynamically, via configuration flags, in HTML templates. 
-- `Site.ini`: Specifies some configuration flags.
+- `Site.ini`: Specifies some configuration flags. CLI arguments can often be used as an alternative to this file.
 
 
 ## Configuration Flags
@@ -42,14 +49,15 @@ Many configuration flags are available.
 They can be specified from the `Site.ini` file, under the `[Site]` section, or as command-line arguments.  
 CLI arguments, if specified, always take priority over the INI values.
 
-In the INI file, flags are specified as they are, separated by new lines. In 
+In the INI file, flags are specified as they are, separated by new lines.  
+As CLI arguments, they are prepended by double dashes (`--`) and values are assigned to them with your standard shell syntax (usually, it will be `--Flag="Value"`, with a space for separation between arguments).
 
 _Note: Some flags are currently CLI-only, while others are file-only. This will be soon fixed._
 
 - `SiteName`: The name of your site.
 - `BlogName`: The name of the blog section of your site.
 - `SiteTagline`: The tagline or motto of your site.
-- `SiteRoot`: The root path of your site on your server. Defaults to `/`.
+- `SiteRoot`: The root path of your site on your server. Useful if you keep many sites on the same domain/address. Defaults to `/`.
 - `SiteDomain`: Domain of your website, for use for feeds and sitemaps.
 - `SiteLang`: The language of your site. Will be used for choosing certain strings. Defaults to `en`.
 - `SiteTemplate`: Name of the template file to use for the site. Defaults to `Default.html`.
@@ -58,7 +66,7 @@ _Note: Some flags are currently CLI-only, while others are file-only. This will 
 - `NoScripts`: Whether or not to strip out `<script>` tags from the output HTML. Defaults to `False`.
 - `Sorting`: -
 
-- `GemtextOut`: Whether or not to output a Gemtext conversion of the site. Requires html2gmi. Defaults to `False`.
+- `GemtextOut`: Whether or not to output a Gemtext conversion of the site. Requires [html2gmi](https://github.com/LukeEmmet/html2gmi). Defaults to `False`.
 - `GemtextHeader`: A string to optionally include at the top of every Gemtext file.
 
 - `SitemapOut`: Whether or not to create sitemap files. Defaults to `True`.
