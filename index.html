@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="Assets/staticoso-docs.css" rel="stylesheet"/>
+<title>staticoso docs - staticoso docs</title>
+<meta content="View the source for this site: gitlab.com/octtspacc/staticoso-docs..." name="description"/>
+<link href="favicon.png" rel="icon" type="image/png"/>
+<meta content="website" property="og:type"/>
+<meta content="staticoso docs - staticoso docs" property="og:title"/>
+<meta content="View the source for this site: gitlab.com/octtspacc/staticoso-docs..." property="og:description"/>
+<meta content="" property="og:image"/>
+<style>
+</style>
+</head>
+<body>
+<h1 class="SectionHeading"><span class="SectionLink"><a href="#-staticoso-docs"><span>»</span></a> </span><span class="SectionTitle" id="-staticoso-docs"><a href="https://gitlab.com/octtspacc/staticoso">staticoso</a> docs</span></h1>
+<p><em>View the source for this site: <a href="https://gitlab.com/octtspacc/staticoso-docs">gitlab.com/octtspacc/staticoso-docs</a></em></p>
+<p>Don't yet mind the fact that there is no CSS at all, and only one single page. <strong>Still a heavy WIP</strong> :)</p>
+<h2 class="SectionHeading"><span class="SectionLink"><a href="#-Input-Files"><span>»</span></a> </span><span class="SectionTitle" id="-Input-Files">Input Files</span></h2>
+<p><em>Note: Non-lowercase file suffixes are currently broken. This will be fixed.</em></p>
+<p><em>Note: Files with <code>.htm</code> extension are currently broken too.</em></p>
+<h3 class="SectionHeading"><span class="SectionLink"><a href="#-Templates-and-Parts"><span>»</span></a> </span><span class="SectionTitle" id="-Templates-and-Parts">Templates and Parts</span></h3>
+<p>For templates and parts files, formats supported as input are:</p>
+<ul>
+<li>HTML (Suffixes: <code>.htm</code>, <code>.html</code>)</li>
+</ul>
+<h3 class="SectionHeading"><span class="SectionLink"><a href="#-Pages-and-Posts"><span>»</span></a> </span><span class="SectionTitle" id="-Pages-and-Posts">Pages and Posts</span></h3>
+<p>For pages and posts files, many formats are supported as input:</p>
+<ul>
+<li>HTML (Suffixes: <code>.htm</code>, <code>.html</code>)</li>
+<li>Markdown (Suffixes: <code>.md</code>, <code>.markdown</code>)</li>
+<li>Pug (through <a href="https://npmjs.com/package/pug-cli">pug-cli</a>) (Suffixes: <code>.pug</code>)</li>
+<li>Plain text (Suffixes: <code>.txt</code>) (Rendered as plain text enclosed in <code>&lt;pre&gt;</code> tags in the HTML)</li>
+</ul>
+<h3 class="SectionHeading"><span class="SectionLink"><a href="#-Site-folder-Structure"><span>»</span></a> </span><span class="SectionTitle" id="-Site-folder-Structure">Site folder Structure</span></h3>
+<p>A <strong>full</strong> staticoso site folder looks like this:</p>
+<ul>
+<li><code>Assets/</code>: Contains files that will be just copied as they are in the root of the output folder (images, CSS files, ...).</li>
+<li><code>Pages/</code>: Contains website pages.</li>
+<li><code>Posts/</code>: Contains website posts, which differ for some things from pages.</li>
+<li><code>Templates/</code>: Contains base HTML pages to be used as templates for compiling all the pages.</li>
+<li><code>StaticParts/</code>: Contains HTML snippets that can be included statically in HTML templates.</li>
+<li><code>DynamicParts/</code>: Contains HTML snippets that can be included dynamically, via configuration flags, in HTML templates. </li>
+<li><code>Site.ini</code>: Specifies some configuration flags. CLI arguments can often be used as an alternative to this file.</li>
+</ul>
+<p>Keep in mind that the only required files (and, consequently, appropriate folders) for a minimum successful build are at least: one HTML base template, and one page or post. Other elements are optional.<br/>
+A reasonably <strong>minimal</strong> staticoso site folder tree can look like this:</p>
+<pre><code>
+.
+├── Assets
+│   ├── Default.css
+│   └── favicon.ico
+├── Templates
+│   └── Default.html
+├── Pages
+│   └── index.md
+└── Posts
+    └── 2022-05-16-That-Day.md
+</code></pre>
+<h2 class="SectionHeading"><span class="SectionLink"><a href="#-Preprocessor-Flags"><span>»</span></a> </span><span class="SectionTitle" id="-Preprocessor-Flags">Preprocessor Flags</span></h2>
+<p>Preprocessor flags can be included in single-line comments.<br/>
+They must be prepended by a <code>%</code> (percent sign) character, and values are assigned with the <a href="https://docs.python.org/3/library/configparser.html#supported-ini-file-structure">standard Python INI syntax</a>.</p>
+<p><em>Note: <strong>Markdown</strong> doesn't officially support comments. staticoso thus uses its own syntax: a line starting with <code>//</code> (2 slashes) indicates a comment.</em></p>
+<p>For example:
+<code>// % Flag = Value</code></p>
+<p>Supported values:</p>
+<ul>
+<li><code>Template</code></li>
+<li><code>Style</code></li>
+<li><code>Type</code></li>
+<li><code>Index</code></li>
+<li><code>Feed</code></li>
+<li><code>Title</code></li>
+<li><code>HTMLTitle</code></li>
+<li><code>Description</code></li>
+<li><code>Image</code></li>
+<li><code>Macros</code></li>
+<li><code>Categories</code></li>
+<li><code>CreatedOn</code></li>
+<li><code>EditedOn</code></li>
+<li><code>Order</code></li>
+</ul>
+<p>TODO: Finish writing this</p>
+<h2 class="SectionHeading"><span class="SectionLink"><a href="#-Configuration-Flags"><span>»</span></a> </span><span class="SectionTitle" id="-Configuration-Flags">Configuration Flags</span></h2>
+<p>Many configuration flags are available.</p>
+<p>They can be specified from the <code>Site.ini</code> file, under the relative sections, or as command-line arguments.<br/>
+CLI arguments, if specified, always take priority over the INI values; this is to easily allow for many different build workflows on the same site.</p>
+<p>In the INI file, flags are specified as they are, separated by new lines.<br/>
+As CLI arguments, they are prepended by double dashes (<code>--</code>) and section name, and values are assigned to them with your standard shell syntax (usually, it will be <code>--SectionFlag="Value"</code>, with a space for separation between arguments).</p>
+<p><em>Note: Some flags are currently CLI-only, while others are file-only. This will be soon fixed.</em></p>
+<h3 class="SectionHeading"><span class="SectionLink"><a href="#-Site"><span>»</span></a> </span><span class="SectionTitle" id="-Site">Site</span></h3>
+<ul>
+<li><code>Name</code> (<code>--SiteName</code>): The name of your site.</li>
+<li><code>BlogName</code> (<code>--BlogName</code>): The name of the blog section of your site. Can be omitted, and the site name will be used instead.</li>
+<li><code>Tagline</code> (<code>--SiteTagline</code>): The tagline or motto of your site.</li>
+</ul>
+<h3 class="SectionHeading"><span class="SectionLink"><a href="#-Minify"><span>»</span></a> </span><span class="SectionTitle" id="-Minify">Minify</span></h3>
+<ul>
+<li><code>Minify</code> (<code>--Minify</code>): Whether or not to minify the output HTML. Defaults to <code>False</code>.</li>
+<li><code>KeepComments</code> (<code>--MinifyKeepComments</code>): Optionally keeping comments in minified HTML, instead of removing them. Defaults to <code>False</code>.</li>
+</ul>
+<h3 class="SectionHeading"><span class="SectionLink"><a href="#-Categories"><span>»</span></a> </span><span class="SectionTitle" id="-Categories">Categories</span></h3>
+<ul>
+<li><code>Automatic</code> (<code>--CategoriesAutomatic</code>): Whether or not to automatically create pages in the <code>Categories/</code> directory of your site. Defaults to <code>False</code>.</li>
+<li><code>Uncategorized</code> (<code>--CategoriesUncategorized</code>): Enabling a custom name for the automatically managed "Uncategorized" category. Defaults to <code>Uncategorized</code>.</li>
+</ul>
+<hr/>
+<p>TODO: Correctly categorize all the below flags</p>
+<ul>
+<li><code>SiteRoot</code>: The root path of your site on your server. Useful if you keep many sites on the same domain/address. Defaults to <code>/</code>.</li>
+<li><code>SiteDomain</code>: Domain of your website, for use for feeds and sitemaps.</li>
+<li><code>SiteLang</code>: The language of your site. Will be used for choosing certain strings. Defaults to <code>en</code>.</li>
+<li><code>SiteTemplate</code>: Name of the template file to use for the site. Defaults to <code>Default.html</code>.</li>
+<li><code>NoScripts</code>: Whether or not to strip out <code>&lt;script&gt;</code> tags from the output HTML. Defaults to <code>False</code>.</li>
+<li><code>Sorting</code>: Set sorting styles for pages and posts lists.</li>
+<li><code>GemtextOutput</code>: Whether or not to output a Gemtext conversion of the site. Requires <a href="https://github.com/LukeEmmet/html2gmi">html2gmi</a> to be present in system <code>$PATH</code>. Defaults to <code>False</code>.</li>
+<li><code>GemtextHeader</code>: A string to optionally include at the top of every Gemtext file.</li>
+<li><code>SitemapOutput</code>: Whether or not to create sitemap files. Defaults to <code>True</code>.</li>
+<li><code>FeedEntries</code>: Max number of pages to include in feed files. A value of <code>0</code> disables feed generation, while <code>-1</code> equals no limit. Defaults to <code>10</code>.</li>
+<li><code>DynamicParts</code>: Assign any desired HTML files (from the ones stored in the <code>DynamicParts/</code> directory) to the relative section in your base HTML.</li>
+<li><code>MarkdownExts</code>: Specify a custom list of extensions to use when parsing Markdown.</li>
+<li><code>MastodonURL</code>: URL of a Mastodon instance to use for notifying of new posts and creating comment links. Leave blank to disable Mastodon.</li>
+<li><code>MastodonToken</code>: Application token of a Mastodon account to use for notifying of new posts and creating comment links. Leave blank to disable Mastodon.</li>
+<li><code>FeedCategoryFilter</code>: List of post categories to include in the site main feed. Defaults to only <code>['Blog']</code>.</li>
+<li><code>ActivityPubHoursLimit</code>: Maximum time limit (in hours) for sharing any newly-created post via ActivityPub; posts older than that amount won't get shared. Defaults to <code>168</code> (1 week).</li>
+<li><code>OutputDir</code>: Specifies a custom output path for the compiled website's files. Defaults to <code>./public/</code>.</li>
+</ul>
+<h2 class="SectionHeading"><span class="SectionLink"><a href="#-Internal-Markup-Tags"><span>»</span></a> </span><span class="SectionTitle" id="-Internal-Markup-Tags">Internal Markup Tags</span></h2>
+<p><em>Note: You only really need to care about this section if you're developing themes. If you are building your site with an already prepared theme, then you can do without this information.</em></p>
+<p>staticoso uses a simple internal markup language that's the essence of its template system.</p>
+<p>Tags are enclosed in square brackets (with colons as token separators), and declared with the form <code>[staticoso:Name:Values]</code>.<br/>
+For some tags, there are no values to be specified, so the last part can be omitted. Starting the declaration with <code>staticoso</code> is always required.</p>
+<p>You can use the following tags in your templates or pages, to let everything work as you want. Some are obviously needed for compiling minimum viable pages, like the one for displaying content.</p>
+<p>TODO: Finish writing this</p>
+</body>
+</html>
